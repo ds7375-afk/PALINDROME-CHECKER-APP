@@ -2,39 +2,51 @@
 
 public class PalindromeCheckerApp {
 
+    @param args Command-line arguments
+     */
     public static void main(String[] args) {
         String input = "level";
 
-
+        // Using the StackStrategy from UC12 for benchmarking
         PalindromeStrategy strategy = new StackStrategy();
 
+        // Capture execution start time in nanoseconds
+        long startTime = System.nanoTime();
 
+        // Execute the algorithm
         boolean isPalindrome = strategy.check(input);
 
-        // Output results
+        // Capture execution end time
+        long endTime = System.nanoTime();
+
+        // Calculate total execution duration
+        long duration = endTime - startTime;
+
+        // Display results as shown in the requirement
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + duration + " ns");
     }
 }
 
-
+/**
+ * Interface from UC12 to allow for interchangeable algorithms.
+ */
 interface PalindromeStrategy {
     boolean check(String input);
 }
 
-
+/**
+ * Stack-based implementation for comparison.
+ */
 class StackStrategy implements PalindromeStrategy {
-
     @Override
     public boolean check(String input) {
-
         java.util.Stack<Character> stack = new java.util.Stack<>();
-
 
         for (char c : input.toCharArray()) {
             stack.push(c);
         }
-
 
         for (char c : input.toCharArray()) {
             if (c != stack.pop()) {
