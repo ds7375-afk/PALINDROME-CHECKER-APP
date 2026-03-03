@@ -1,17 +1,15 @@
-@author Developer
- * @version 11.0
+
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        // Input as per the requirement example
-        String input = "racecar";
+        String input = "level";
 
-        // Create an instance of the service (Encapsulation)
-        PalindromeService service = new PalindromeService();
 
-        // Call the service method
-        boolean isPalindrome = service.checkPalindrome(input);
+        PalindromeStrategy strategy = new StackStrategy();
+
+
+        boolean isPalindrome = strategy.check(input);
 
         // Output results
         System.out.println("Input : " + input);
@@ -20,28 +18,29 @@ public class PalindromeCheckerApp {
 }
 
 
-class PalindromeService {
-
-    /**
-     * Checks whether the input string is a palindrome.
-     *
-     * @param input Input string
-     * @return true if palindrome, false otherwise
-     */
-    public boolean checkPalindrome(String input) {
-
-        int start = 0;
-        int end = input.length() - 1;
-
-        // Compare characters moving inward
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
-                return false; // Not a palindrome
-            }
-            start++;
-            end--;
-        }
-        return true; // Is a palindrome
-    }
+interface PalindromeStrategy {
+    boolean check(String input);
 }
+
+
+class StackStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String input) {
+
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
